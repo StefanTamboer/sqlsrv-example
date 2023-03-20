@@ -22,10 +22,11 @@ hooks:
   post-start:
     - exec: echo export PATH="$PATH:/opt/mssql-tools/bin" >> ~/.bashrc
     - exec: source ~/.bashrc
-    - exec: /opt/mssql-tools/bin/sqlcmd -S ddev-VIS-sqlsrv -U sa -P Db-password#01 -i "/mnt/ddev_config/a2sp/build.sql"
+    - exec: /opt/mssql-tools/bin/sqlcmd -S ddev-sqlsrv-example-sqlsrv -U sa -P Db-password#01 -i "/mnt/ddev_config/web-build/migrations/build.sql"
     - exec: '[ ! -f /var/www/html/.env ] || mv -f /var/www/html/.env /var/www/html/.env.backup'
     - exec: sudo cp /var/www/html/.ddev/.ddev.env /var/www/html/.env
-    - exec: sudo cp /var/www/html/.env.testing.example /var/www/html/.env.testing
+    - exec: cd /var/www/html
+    - exec: php artisan migrate
 
 # Key features of ddev's config.yaml:
 

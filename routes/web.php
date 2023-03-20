@@ -14,5 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $data = \App\Models\User::query()->where('name', 'mwinters')->first();
+
+    if (!$data){
+        $user = new \App\Models\User();
+        $user->name = 'mwinters';
+        $user->email = 'mark@mark.win';
+        $user->password = 'Straal&Zon#01';
+        $user->save();
+    }
+
+    $data = \App\Models\User::query()->where('name', 'mwinters')->first();
+
+    return view('welcome', ['data' => $data->getAttributes()]);
 });
